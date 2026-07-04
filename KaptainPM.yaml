@@ -1,0 +1,8 @@
+apiVersion: kaptain.org/1.19
+kind: layer-and-layerset-build
+metadata:
+  description: "GCP GKE cluster management layerset composing quality and build configuration"
+
+spec:
+  layers:
+    - layerset-and-layer-build:[1.4,2.0)
