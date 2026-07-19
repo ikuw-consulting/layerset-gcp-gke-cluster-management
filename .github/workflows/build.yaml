@@ -11,4 +11,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - run: test -f src/layerset/KaptainPM.yaml
+      - name: Validate compatibility contract
+        run: bash scripts/validate-compatibility-contract.sh
+
+  build:
+    needs: validate
+    uses: kube-kaptain/buildon-github-actions/.github/workflows/layer-and-layerset-build.yaml@1.1.46
+    permissions:
+      contents: write
+      packages: write
+      checks: write
