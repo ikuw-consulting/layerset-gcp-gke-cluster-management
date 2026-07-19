@@ -11,7 +11,7 @@ workflow="${repo_root}/.github/workflows/build.yaml"
 
 compatible_layer='    - layer-gcp-gke-cluster-management:[1.1.0,2.0)'
 legacy_layer='    - layer-gcp-gke-cluster-management:[1.0,2.0)'
-downstream_contract='layerset-gcp-gke-cluster-management:[1.1.0,2.0)'
+downstream_boundary='layerset-gcp-gke-cluster-management:[1.1.0,2.0)'
 version_pattern="          pattern: '^([0-9]+\\.[0-9]+\\.[0-9]+)$'"
 pinned_workflow='    uses: kube-kaptain/buildon-github-actions/.github/workflows/layer-and-layerset-build.yaml@1.1.46'
 
@@ -122,7 +122,7 @@ fi
 
 require_text \
   "${readme}" \
-  "${downstream_contract}" \
+  "${downstream_boundary}" \
   'downstream consumer range'
 require_text \
   "${readme}" \
@@ -137,10 +137,10 @@ for expected in \
   '      packages: write' \
   '      checks: write'; do
   if ! grep -Fqx -- "${expected}" <<< "${build_job}"; then
-    printf 'build workflow job is missing required contract line: %s\n' \
+    printf 'build workflow job is missing required boundary line: %s\n' \
       "${expected}" >&2
     exit 1
   fi
 done
 
-printf 'layerset compatibility contract is valid\n'
+printf 'layerset consumer-mode version boundary is valid\n'

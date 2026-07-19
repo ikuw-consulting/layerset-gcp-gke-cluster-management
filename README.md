@@ -9,18 +9,18 @@ Composes these layers in order:
 2. **layer-gcp-gke-cluster-management** - GKE cluster management image build
    orchestration via the `postVersionsAndNaming` hook.
 
-## Compatibility contract
+## Consumer-mode version boundary
 
 The source layerset selects
-`layer-gcp-gke-cluster-management:[1.1.0,2.0)`. This is a compatibility range,
-not an exact pin: `1.1.0` is the first layer version that guarantees consumer
-mode for final-package builds, later compatible `1.x` releases remain eligible,
-and `2.x` is excluded.
+`layer-gcp-gke-cluster-management:[1.1.0,2.0)`. This is a consumer-mode version
+range, not an exact pin: `1.1.0` is the first layer version that guarantees
+consumer mode for final-package builds, later eligible `1.x` releases remain
+available, and `2.x` is excluded.
 
 The first layerset release intended to carry that guarantee is `1.1.0`. It has
 not been published yet. Until both compatible `1.1.0` releases exist,
-downstream final-package consumers must not claim that the contract is
-available.
+downstream final-package consumers must not claim that the consumer-mode
+boundary is available.
 
 `version.txt` is the authoritative layerset release version. The root
 `KaptainPM.yaml` uses Kaptain's custom `file-pattern-match` strategy with
@@ -42,9 +42,10 @@ After publication, downstream final-package consumers use:
 That downstream range deliberately excludes layerset `1.0.x`, whose management
 layer can still start its own derived-image build.
 
-Run `bash scripts/validate-compatibility-contract.sh` to validate these source
-and downstream boundaries locally. CI runs that validation first, then invokes
-the Kaptain `layer-and-layerset-build` reusable workflow pinned to `1.1.46`.
+Run `bash scripts/validate-consumer-mode-boundary.sh` to validate these source
+and downstream version boundaries locally. CI runs that validation first, then
+invokes the Kaptain `layer-and-layerset-build` reusable workflow pinned to
+`1.1.46`.
 
 ## Documentation
 
