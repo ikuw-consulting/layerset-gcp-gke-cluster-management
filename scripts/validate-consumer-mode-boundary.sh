@@ -13,7 +13,7 @@ compatible_layer='    - layer-gcp-gke-cluster-management:[1.1.0,2.0)'
 legacy_layer='    - layer-gcp-gke-cluster-management:[1.0,2.0)'
 downstream_boundary='layerset-gcp-gke-cluster-management:[1.1.0,2.0)'
 version_pattern="          pattern: '^([0-9]+\\.[0-9]+\\.[0-9]+)$'"
-pinned_workflow='    uses: kube-kaptain/buildon-github-actions/.github/workflows/layer-and-layerset-build.yaml@1.1.46'
+pinned_workflow='    uses: kube-kaptain/buildon-github-actions/.github/workflows/layer-and-layerset-build.yaml@1.1.59'
 
 require_exact_line() {
   local file="$1"
@@ -67,8 +67,8 @@ extract_workflow_job() {
 
 require_exact_line \
   "${build_manifest}" \
-  'apiVersion: kaptain.org/1.22' \
-  'Kaptain 1.22 API version'
+  'apiVersion: kaptain.org/1.31' \
+  'Kaptain 1.31 API version'
 require_exact_line \
   "${build_manifest}" \
   "        maxParts: '3'" \
@@ -97,10 +97,14 @@ require_exact_line \
   "${build_manifest}" \
   "${version_pattern}" \
   'three-part release-version pattern'
-require_exact_line \
-  "${release_version_file}" \
-  '1.1.0' \
-  'first consumer-safe release version'
+# 1.1.0 was the first consumer-safe release; every later release must stay in
+# that series (1.x, minor >= 1) so the downstream [1.1.0,2.0) range still holds.
+release_version="$(tr -d '[:space:]' < "${release_version_file}")"
+if ! [[ "${release_version}" =~ ^1\.[1-9][0-9]*\.[0-9]+$ ]]; then
+  printf 'release version %s is outside the consumer-safe series [1.1.0,2.0)\n' \
+    "${release_version}" >&2
+  exit 1
+fi
 
 release_version_lines="$(wc -l < "${release_version_file}" | tr -d '[:space:]')"
 if [[ "${release_version_lines}" != "1" ]]; then

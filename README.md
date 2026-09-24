@@ -45,7 +45,7 @@ layer can still start its own derived-image build.
 Run `bash scripts/validate-consumer-mode-boundary.sh` to validate these source
 and downstream version boundaries locally. CI runs that validation first, then
 invokes the Kaptain `layer-and-layerset-build` reusable workflow pinned to
-`1.1.46`.
+`1.1.59`.
 
 ## Documentation
 
