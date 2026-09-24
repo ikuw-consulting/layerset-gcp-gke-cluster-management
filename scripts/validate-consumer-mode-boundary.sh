@@ -13,7 +13,7 @@ compatible_layer='    - layer-gcp-gke-cluster-management:[1.1.0,2.0)'
 legacy_layer='    - layer-gcp-gke-cluster-management:[1.0,2.0)'
 downstream_boundary='layerset-gcp-gke-cluster-management:[1.1.0,2.0)'
 version_pattern="          pattern: '^([0-9]+\\.[0-9]+\\.[0-9]+)$'"
-pinned_workflow='    uses: kube-kaptain/buildon-github-actions/.github/workflows/layer-and-layerset-build.yaml@1.1.46'
+pinned_workflow='    uses: kube-kaptain/buildon-github-actions/.github/workflows/layer-and-layerset-build.yaml@1.1.59'
 
 require_exact_line() {
   local file="$1"
