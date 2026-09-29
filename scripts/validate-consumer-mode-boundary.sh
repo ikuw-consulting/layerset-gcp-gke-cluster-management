@@ -13,7 +13,7 @@ compatible_layer='    - layer-gcp-gke-cluster-management:[1.1.0,2.0)'
 legacy_layer='    - layer-gcp-gke-cluster-management:[1.0,2.0)'
 downstream_boundary='layerset-gcp-gke-cluster-management:[1.1.0,2.0)'
 version_pattern="          pattern: '^([0-9]+\\.[0-9]+\\.[0-9]+)$'"
-pinned_workflow='    uses: kube-kaptain/buildon-github-actions/.github/workflows/layer-and-layerset-build.yaml@1.1.59'
+pinned_workflow='    uses: kube-kaptain/buildon-github-actions/.github/workflows/layer-and-layerset-build.yaml@1.1.62'
 
 require_exact_line() {
   local file="$1"
@@ -67,7 +67,7 @@ extract_workflow_job() {
 
 require_exact_line \
   "${build_manifest}" \
-  'apiVersion: kaptain.org/1.31' \
+  'apiVersion: kaptain.org/1.34' \
   'Kaptain 1.31 API version'
 require_exact_line \
   "${build_manifest}" \
