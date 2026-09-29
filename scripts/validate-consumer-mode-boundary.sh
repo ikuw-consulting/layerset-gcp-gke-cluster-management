@@ -67,7 +67,7 @@ extract_workflow_job() {
 
 require_exact_line \
   "${build_manifest}" \
-  'apiVersion: kaptain.org/1.31' \
+  'apiVersion: kaptain.org/1.34' \
   'Kaptain 1.31 API version'
 require_exact_line \
   "${build_manifest}" \
